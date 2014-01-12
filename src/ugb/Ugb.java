@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  * @author amauter
  */
 public class Ugb {
+    public String baseDir = null;
     public static Ugb instance = null;
     public int[] jokerCount = new int[4]; //this array holds the number of remaining jokers the players have left
     public boolean jokerTriggered = false; //whether the joker was triggered this round
@@ -25,9 +26,15 @@ public class Ugb {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Running UltraStar Gameboard on a " + System.getProperty("sun.arch.data.model") + "bit system");
+        
         Ugb gameBoard = Ugb.getInstance();
+        gameBoard.baseDir = args[0].replaceAll("\\\\", "/");
         gameBoard.init();
+        
+        
+        System.out.println("Running UltraStar Gameboard on a " + System.getProperty("sun.arch.data.model") + "bit system");
+        System.out.println("Current base dir: " + gameBoard.baseDir);
+        
     }
     
     public static Ugb getInstance(){

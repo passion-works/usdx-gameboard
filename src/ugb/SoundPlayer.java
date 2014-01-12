@@ -15,16 +15,16 @@ import javax.sound.sampled.Clip;
  * @author amauter
  */
 public class SoundPlayer {
-
+    public Ugb gameBoard = Ugb.getInstance();
     public static SoundPlayer instance = null;
 
 //** add this into your application code as appropriate
 // Open an input stream  to the audio file.
-    File timeTicking = new File("sfx/time_running_out.wav");
-    File countdownStart = new File("sfx/countdown_start.wav");
-    File countdownEnd = new File("sfx/countdown_end.wav");
-    File buzzer = new File("sfx/buzzer.wav");
-    File buzzerTooLate = new File("sfx/yoshi_mount.wav");
+    File timeTicking = new File(gameBoard.baseDir + "/sfx/time_running_out.wav");
+    File countdownStart = new File(gameBoard.baseDir + "/sfx/countdown_start.wav");
+    File countdownEnd = new File(gameBoard.baseDir + "/sfx/countdown_end.wav");
+    File buzzer = new File(gameBoard.baseDir + "/sfx/buzzer.wav");
+    File buzzerTooLate = new File(gameBoard.baseDir + "/sfx/yoshi_mount.wav");
     InputStream in = null;
 
     SoundPlayer() throws IOException {

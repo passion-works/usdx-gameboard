@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * @author amauter
  */
 public class KeystrokeController {
+    public Ugb gameBoard = Ugb.getInstance();
     public static KeystrokeController instance = null;
     
     public static KeystrokeController getInstance(){
@@ -26,7 +27,7 @@ public class KeystrokeController {
     
     public void sendTest(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/keystroke_test.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/keystroke_test.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -34,7 +35,7 @@ public class KeystrokeController {
     
     public void sendKey1(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_1.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_1.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,7 +44,7 @@ public class KeystrokeController {
     
     public void sendKey2(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_2.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_2.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,7 +53,7 @@ public class KeystrokeController {
     
     public void sendKey3(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_3.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_3.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,7 +62,7 @@ public class KeystrokeController {
     
     public void sendKeyLeft(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_left.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_left.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,7 +71,7 @@ public class KeystrokeController {
     
     public void sendKeyRight(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_right.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_right.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -79,7 +80,7 @@ public class KeystrokeController {
     
     public void sendKeyEnter(){
         try {
-            Process p = Runtime.getRuntime().exec("autoHotkey/key_enter.exe");
+            Process p = Runtime.getRuntime().exec(gameBoard.baseDir + "/autoHotkey/key_enter.exe");
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
