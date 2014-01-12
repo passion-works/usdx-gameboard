@@ -38,6 +38,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKey1");
     }
     
     public void sendKey2(){
@@ -46,6 +47,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKey2");
     }   
     
     public void sendKey3(){
@@ -54,6 +56,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKey3");
     } 
     
     public void sendKeyLeft(){
@@ -62,6 +65,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKeyLeft");
     } 
     
     public void sendKeyRight(){
@@ -70,6 +74,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKeyRight");
     } 
     
     public void sendKeyEnter(){
@@ -78,6 +83,7 @@ public class KeystrokeController {
         } catch (IOException ex) {
             Logger.getLogger(KeystrokeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("sendKeyEnter");
     } 
         
 }

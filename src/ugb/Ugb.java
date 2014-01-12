@@ -64,15 +64,25 @@ public class Ugb {
     
     public void startSong(){
         System.out.println("START ROUND!!!");
-        //TODO: send keystroke enter to USDX
+        keystrokeController.sendKeyEnter();
         reset();
     }
 
     public void useJoker(int player) {
          System.out.println("PLAY JOKER!!! And reducing joker count of Player" + player);
-         keystrokeController.sendTest();
          jokerCount[player]--;
          reset();
+         switch(player){
+             case 1:
+                 keystrokeController.sendKey1();
+             break;
+             case 2:
+                 keystrokeController.sendKey2();
+             break;
+             case 3:
+                keystrokeController.sendKey3();
+             break;
+         }
          //TODO: send keystroke player to USDX
         
     }

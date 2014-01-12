@@ -85,14 +85,17 @@ public class GUI extends javax.swing.JFrame {
 
         remTimePlchldLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        buzzer1_count = new javax.swing.JLabel();
         buzzer1_joker = new javax.swing.JLabel();
         buzzer1_tooslow = new javax.swing.JLabel();
         buzzer1 = new javax.swing.JLabel();
         buzzer1_active = new javax.swing.JLabel();
+        buzzer2_count = new javax.swing.JLabel();
         buzzer2_joker = new javax.swing.JLabel();
         buzzer2_tooslow = new javax.swing.JLabel();
         buzzer2 = new javax.swing.JLabel();
         buzzer2_active = new javax.swing.JLabel();
+        buzzer3_count = new javax.swing.JLabel();
         buzzer3_joker = new javax.swing.JLabel();
         buzzer3_tooslow = new javax.swing.JLabel();
         buzzer3 = new javax.swing.JLabel();
@@ -126,6 +129,13 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(1310, 200, 1, 212);
 
+        buzzer1_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
+        buzzer1_count.setForeground(new java.awt.Color(0, 51, 255));
+        buzzer1_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buzzer1_count.setText("2");
+        getContentPane().add(buzzer1_count);
+        buzzer1_count.setBounds(50, 730, 70, 140);
+
         buzzer1_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer1_joker.setForeground(new java.awt.Color(255, 255, 255));
         buzzer1_joker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -155,6 +165,13 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().add(buzzer1_active);
         buzzer1_active.setBounds(0, 330, 426, 516);
 
+        buzzer2_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
+        buzzer2_count.setForeground(new java.awt.Color(255, 0, 51));
+        buzzer2_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buzzer2_count.setText("3");
+        getContentPane().add(buzzer2_count);
+        buzzer2_count.setBounds(480, 730, 70, 140);
+
         buzzer2_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer2_joker.setForeground(new java.awt.Color(255, 255, 255));
         buzzer2_joker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -183,6 +200,13 @@ public class GUI extends javax.swing.JFrame {
         buzzer2_active.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         getContentPane().add(buzzer2_active);
         buzzer2_active.setBounds(430, 330, 426, 516);
+
+        buzzer3_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
+        buzzer3_count.setForeground(new java.awt.Color(0, 255, 0));
+        buzzer3_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buzzer3_count.setText("4");
+        getContentPane().add(buzzer3_count);
+        buzzer3_count.setBounds(900, 730, 70, 140);
 
         buzzer3_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer3_joker.setForeground(new java.awt.Color(255, 255, 255));
@@ -327,6 +351,10 @@ public class GUI extends javax.swing.JFrame {
         remTimePlchldLabel.setForeground(Color.black);
         remTimePlchldLabel.setFont(new Font("Lucide Grande", 0, 300));
         
+        buzzer1_count.setText(String.valueOf(gameBoard.jokerCount[1]));
+        buzzer2_count.setText(String.valueOf(gameBoard.jokerCount[2]));
+        buzzer3_count.setText(String.valueOf(gameBoard.jokerCount[3]));
+        
         for(int i=1;i<=3;i++){
             if(gameBoard.jokerCount[i]>0){
                 buzzerArray[i].setVisible(true);
@@ -389,14 +417,17 @@ public class GUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel buzzer1;
     private javax.swing.JLabel buzzer1_active;
+    private javax.swing.JLabel buzzer1_count;
     private javax.swing.JLabel buzzer1_joker;
     private javax.swing.JLabel buzzer1_tooslow;
     private javax.swing.JLabel buzzer2;
     private javax.swing.JLabel buzzer2_active;
+    private javax.swing.JLabel buzzer2_count;
     private javax.swing.JLabel buzzer2_joker;
     private javax.swing.JLabel buzzer2_tooslow;
     private javax.swing.JLabel buzzer3;
     private javax.swing.JLabel buzzer3_active;
+    private javax.swing.JLabel buzzer3_count;
     private javax.swing.JLabel buzzer3_joker;
     private javax.swing.JLabel buzzer3_tooslow;
     private javax.swing.JPanel jPanel1;
