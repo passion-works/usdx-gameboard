@@ -25,6 +25,7 @@ public class Ugb {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        System.out.println("Running UltraStar Gameboard on a " + System.getProperty("sun.arch.data.model") + "bit system");
         Ugb gameBoard = Ugb.getInstance();
         gameBoard.init();
     }

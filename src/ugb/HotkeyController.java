@@ -81,7 +81,13 @@ public class HotkeyController implements HotkeyListener {
     }
     
     public void init(){
-        JIntellitype.setLibraryLocation("C:/Windows/SysWOW64/JIntellitype64.dll");
+        if(System.getProperty("sun.arch.data.model").equals("32")){
+            JIntellitype.setLibraryLocation("lib/JIntellitype.dll");
+        }
+        else if(System.getProperty("sun.arch.data.model").equals("64")){
+            JIntellitype.setLibraryLocation("lib/JIntellitype64.dll");
+        }
+        
         JIntellitype.getInstance().registerHotKey(4,"r");
         JIntellitype.getInstance().registerHotKey(5,"n");
         JIntellitype.getInstance().registerHotKey(6,"s");
