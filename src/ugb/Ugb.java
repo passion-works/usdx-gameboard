@@ -20,6 +20,7 @@ public class Ugb {
     public GUI gameBoardGUI = null;
     public HotkeyController buzzerController = null;
     public KeystrokeController keystrokeController = null;
+    public JokerGame jokerGame = null;
     //TODO: Maybe set playerCount here
     
     /**
@@ -54,6 +55,7 @@ public class Ugb {
         buzzerController.init();
         
         keystrokeController = KeystrokeController.getInstance();
+        jokerGame = JokerGame.getInstance();
     }
     
     public void newGame(){

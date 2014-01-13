@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.DecimalFormatSymbols;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -35,6 +37,9 @@ public class GUI extends javax.swing.JFrame {
     public long timerTimeLeft = 8000;
     public long timerDelay = 5000;
     final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+    Map<String, JLabel> jokerGameIconLabels = new HashMap<>();
+    Map<String, JLabel> jokerGameIconActiveLabels = new HashMap<>();
+    public JLabel gameTimer = null;
     
     public static GUI getInstance(){
         if(instance == null){
@@ -75,6 +80,33 @@ public class GUI extends javax.swing.JFrame {
         }
         
         gameBoard = Ugb.getInstance();
+        
+        mainPanel.setVisible(true);
+        jokerGamePanel.setVisible(true);
+        
+        gameTimer = game_countdown;
+        
+        game_play.setText("\uF034");
+        game_left.setText("\uF039");
+        game_right.setText("\uF03A");
+        game_random.setText("\uF071");
+        
+        game_play_selected.setText("\uF0A1");
+        game_left_selected.setText("\uF0A1");
+        game_random_selected.setText("\uF0A1");
+        game_right_selected.setText("\uF0A1");
+        
+        jokerGameIconLabels.put("play", game_play);
+        jokerGameIconActiveLabels.put("play", game_play_selected);
+        jokerGameIconLabels.put("left", game_left);
+        jokerGameIconActiveLabels.put("left", game_left_selected);
+        jokerGameIconLabels.put("right", game_right);
+        jokerGameIconActiveLabels.put("right", game_right_selected);
+        jokerGameIconLabels.put("random", game_random);
+        jokerGameIconActiveLabels.put("random", game_random_selected);
+        
+        jokerGamePanel.setVisible(false);
+        
     }
    
 
@@ -87,8 +119,18 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jokerGamePanel = new javax.swing.JPanel();
+        game_countdown = new javax.swing.JLabel();
+        game_random = new javax.swing.JLabel();
+        game_random_selected = new javax.swing.JLabel();
+        game_right = new javax.swing.JLabel();
+        game_right_selected = new javax.swing.JLabel();
+        game_play = new javax.swing.JLabel();
+        game_play_selected = new javax.swing.JLabel();
+        game_left = new javax.swing.JLabel();
+        game_left_selected = new javax.swing.JLabel();
+        mainPanel = new javax.swing.JPanel();
         remTimePlchldLabel = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         buzzer1_joker = new javax.swing.JLabel();
         buzzer1_tooslow = new javax.swing.JLabel();
         buzzer1 = new javax.swing.JLabel();
@@ -112,46 +154,99 @@ public class GUI extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(null);
 
+        jokerGamePanel.setPreferredSize(new java.awt.Dimension(1280, 800));
+        jokerGamePanel.setLayout(null);
+
+        game_countdown.setFont(new java.awt.Font("Lucida Grande", 0, 150)); // NOI18N
+        game_countdown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_countdown.setText("19");
+        game_countdown.setOpaque(true);
+        jokerGamePanel.add(game_countdown);
+        game_countdown.setBounds(540, 330, 210, 160);
+
+        game_random.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_random.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_random.setText("4");
+        jokerGamePanel.add(game_random);
+        game_random.setBounds(520, 510, 250, 280);
+
+        game_random_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
+        game_random_selected.setForeground(new java.awt.Color(0, 0, 255));
+        game_random_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_random_selected.setText(" ");
+        jokerGamePanel.add(game_random_selected);
+        game_random_selected.setBounds(440, 390, 410, 516);
+
+        game_right.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_right.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_right.setText("4");
+        jokerGamePanel.add(game_right);
+        game_right.setBounds(920, 260, 250, 280);
+
+        game_right_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
+        game_right_selected.setForeground(new java.awt.Color(0, 0, 255));
+        game_right_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_right_selected.setText(" ");
+        jokerGamePanel.add(game_right_selected);
+        game_right_selected.setBounds(840, 155, 410, 516);
+
+        game_play.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_play.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_play.setText("4");
+        jokerGamePanel.add(game_play);
+        game_play.setBounds(520, 40, 250, 280);
+
+        game_play_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
+        game_play_selected.setForeground(new java.awt.Color(0, 0, 255));
+        game_play_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_play_selected.setText(" ");
+        jokerGamePanel.add(game_play_selected);
+        game_play_selected.setBounds(440, -70, 410, 516);
+
+        game_left.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_left.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_left.setText("4");
+        jokerGamePanel.add(game_left);
+        game_left.setBounds(60, 260, 250, 280);
+
+        game_left_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
+        game_left_selected.setForeground(new java.awt.Color(0, 0, 255));
+        game_left_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_left_selected.setText(" ");
+        jokerGamePanel.add(game_left_selected);
+        game_left_selected.setBounds(-20, 155, 410, 516);
+
+        getContentPane().add(jokerGamePanel);
+        jokerGamePanel.setBounds(0, 0, 1200, 800);
+
+        mainPanel.setLayout(null);
+
         remTimePlchldLabel.setFont(new java.awt.Font("Lucida Grande", 0, 300)); // NOI18N
         remTimePlchldLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         remTimePlchldLabel.setText(" ");
         remTimePlchldLabel.setOpaque(true);
-        getContentPane().add(remTimePlchldLabel);
+        mainPanel.add(remTimePlchldLabel);
         remTimePlchldLabel.setBounds(0, 11, 1268, 312);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(1310, 200, 1, 212);
 
         buzzer1_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer1_joker.setForeground(new java.awt.Color(255, 255, 255));
         buzzer1_joker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1_joker.setText("JOKER");
-        getContentPane().add(buzzer1_joker);
+        mainPanel.add(buzzer1_joker);
         buzzer1_joker.setBounds(70, 500, 290, 140);
 
         buzzer1_tooslow.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
         buzzer1_tooslow.setForeground(new java.awt.Color(255, 255, 255));
         buzzer1_tooslow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1_tooslow.setText("too slow");
-        getContentPane().add(buzzer1_tooslow);
+        mainPanel.add(buzzer1_tooslow);
         buzzer1_tooslow.setBounds(70, 500, 290, 140);
 
         buzzer1.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
         buzzer1.setForeground(new java.awt.Color(0, 0, 255));
         buzzer1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1.setText(" ");
-        getContentPane().add(buzzer1);
+        mainPanel.add(buzzer1);
         buzzer1.setBounds(0, 330, 426, 516);
 
         buzzer1_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
@@ -159,35 +254,35 @@ public class GUI extends javax.swing.JFrame {
         buzzer1_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1_active.setText(" ");
         buzzer1_active.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        getContentPane().add(buzzer1_active);
+        mainPanel.add(buzzer1_active);
         buzzer1_active.setBounds(0, 330, 426, 516);
 
         buzzer1_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer1_count.setForeground(new java.awt.Color(0, 51, 255));
         buzzer1_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1_count.setText("2");
-        getContentPane().add(buzzer1_count);
+        mainPanel.add(buzzer1_count);
         buzzer1_count.setBounds(180, 500, 70, 140);
 
         buzzer2_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer2_joker.setForeground(new java.awt.Color(255, 255, 255));
         buzzer2_joker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2_joker.setText("JOKER");
-        getContentPane().add(buzzer2_joker);
+        mainPanel.add(buzzer2_joker);
         buzzer2_joker.setBounds(500, 500, 290, 140);
 
         buzzer2_tooslow.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
         buzzer2_tooslow.setForeground(new java.awt.Color(255, 255, 255));
         buzzer2_tooslow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2_tooslow.setText("too slow");
-        getContentPane().add(buzzer2_tooslow);
+        mainPanel.add(buzzer2_tooslow);
         buzzer2_tooslow.setBounds(500, 500, 290, 140);
 
         buzzer2.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
         buzzer2.setForeground(new java.awt.Color(255, 0, 51));
         buzzer2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2.setText(" ");
-        getContentPane().add(buzzer2);
+        mainPanel.add(buzzer2);
         buzzer2.setBounds(430, 330, 426, 516);
 
         buzzer2_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
@@ -195,28 +290,28 @@ public class GUI extends javax.swing.JFrame {
         buzzer2_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2_active.setText(" ");
         buzzer2_active.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        getContentPane().add(buzzer2_active);
+        mainPanel.add(buzzer2_active);
         buzzer2_active.setBounds(430, 330, 426, 516);
 
         buzzer2_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer2_count.setForeground(new java.awt.Color(255, 0, 51));
         buzzer2_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2_count.setText("3");
-        getContentPane().add(buzzer2_count);
+        mainPanel.add(buzzer2_count);
         buzzer2_count.setBounds(610, 500, 70, 140);
 
         buzzer3_joker.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer3_joker.setForeground(new java.awt.Color(255, 255, 255));
         buzzer3_joker.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3_joker.setText("JOKER");
-        getContentPane().add(buzzer3_joker);
+        mainPanel.add(buzzer3_joker);
         buzzer3_joker.setBounds(920, 500, 290, 140);
 
         buzzer3_tooslow.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
         buzzer3_tooslow.setForeground(new java.awt.Color(255, 255, 255));
         buzzer3_tooslow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3_tooslow.setText("too slow");
-        getContentPane().add(buzzer3_tooslow);
+        mainPanel.add(buzzer3_tooslow);
         buzzer3_tooslow.setBounds(920, 500, 290, 140);
 
         buzzer3.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
@@ -224,7 +319,7 @@ public class GUI extends javax.swing.JFrame {
         buzzer3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3.setText(" ");
         buzzer3.setToolTipText("");
-        getContentPane().add(buzzer3);
+        mainPanel.add(buzzer3);
         buzzer3.setBounds(850, 330, 426, 516);
 
         buzzer3_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
@@ -232,15 +327,18 @@ public class GUI extends javax.swing.JFrame {
         buzzer3_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3_active.setText(" ");
         buzzer3_active.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        getContentPane().add(buzzer3_active);
+        mainPanel.add(buzzer3_active);
         buzzer3_active.setBounds(850, 330, 426, 516);
 
         buzzer3_count.setFont(new java.awt.Font("Tahoma", 1, 80)); // NOI18N
         buzzer3_count.setForeground(new java.awt.Color(0, 255, 0));
         buzzer3_count.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3_count.setText("4");
-        getContentPane().add(buzzer3_count);
+        mainPanel.add(buzzer3_count);
         buzzer3_count.setBounds(1030, 500, 70, 140);
+
+        getContentPane().add(mainPanel);
+        mainPanel.setBounds(0, 0, 1280, 800);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -435,7 +533,17 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel buzzer3_count;
     private javax.swing.JLabel buzzer3_joker;
     private javax.swing.JLabel buzzer3_tooslow;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel game_countdown;
+    private javax.swing.JLabel game_left;
+    private javax.swing.JLabel game_left_selected;
+    private javax.swing.JLabel game_play;
+    private javax.swing.JLabel game_play_selected;
+    private javax.swing.JLabel game_random;
+    private javax.swing.JLabel game_random_selected;
+    private javax.swing.JLabel game_right;
+    private javax.swing.JLabel game_right_selected;
+    private javax.swing.JPanel jokerGamePanel;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel remTimePlchldLabel;
     // End of variables declaration//GEN-END:variables
 }
