@@ -21,6 +21,7 @@ public class Ugb {
     public HotkeyController buzzerController = null;
     public KeystrokeController keystrokeController = null;
     public JokerGame jokerGame = null;
+    public boolean playJokerGame = false;
     //TODO: Maybe set playerCount here
     
     /**
@@ -81,8 +82,12 @@ public class Ugb {
     public void useJoker(int player) {
          System.out.println("PLAY JOKER!!! And reducing joker count of Player" + player);
          jokerCount[player]--;
-         reset();
-         switch(player){
+         if(playJokerGame){
+             jokerGame.startRound(player);
+         }
+         else{
+            reset();
+            switch(player){
              case 1:
                  keystrokeController.sendKey1();
              break;
@@ -92,6 +97,7 @@ public class Ugb {
              case 3:
                 keystrokeController.sendKey3();
              break;
+            }   
          }
          //TODO: send keystroke player to USDX
         
@@ -100,6 +106,7 @@ public class Ugb {
     public void reset(){
         System.out.println("--- NEW ROUND ---");
         gameBoardGUI.reset();
+        jokerGame.reset();
         jokerTriggered = false;
         for(int i=1; i<=3; i++){
             System.out.println("Player " + i + ": " + jokerCount[i] + " Joker left");

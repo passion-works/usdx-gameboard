@@ -8,12 +8,16 @@ package ugb;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -27,7 +31,13 @@ public class JokerGame {
     public Ugb gameBoard = Ugb.getInstance();
     final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     public Timer timer = new Timer(1000, null);
-    public long timerTimeLeft = 8000;
+    public long timerTimeLeft = 11000;
+    Map<String, Double> jokerProb = new HashMap<>();
+    public String[] availableJokers = new String[3];
+    private List<String> roundJokers = new ArrayList<>();
+    private int jokerPointer;
+    public int currentPlayer;
+    public SoundPlayer soundPlayer;
     
     public static JokerGame getInstance(){
         if(instance == null){
@@ -37,12 +47,67 @@ public class JokerGame {
     }
     
     JokerGame(){
-        initTimer();
-        timer.start();
-        setPlayer(3);
+        try {
+            soundPlayer = SoundPlayer.getInstance();
+        } catch (IOException ex) {
+            Logger.getLogger(JokerGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+        jokerProb.put("play", 0.4);
+        jokerProb.put("nudge", 0.5);
+        jokerProb.put("random", 1.0);
+        
+        availableJokers[0]="play";
+        availableJokers[1]="nudge";
+        availableJokers[2]="random";
+  
+    }
+    
+    public List<String> getLabelsForJokerType(String jokerType){
+        List<String> returnJokerLabels = new ArrayList<>();
+        switch(jokerType){
+            case "play":
+                returnJokerLabels.add("play");
+            break;
+            case "nudge":
+                returnJokerLabels.add("left");
+                returnJokerLabels.add("right");
+            break;
+            case "random":
+                returnJokerLabels.add("random");
+            break;
+        }
+        return returnJokerLabels;
+    }
+    
+    public void stopGame(){
+        String activeJoker = getActiveJoker();
+        if(!activeJoker.equals("error!")){
+            timer.stop();
+            soundPlayer.playBuzzer();
+            System.out.println("GAME STOPPED at Joker: " + getActiveJoker());
+            //TODO: Highlight the selected Joker (like in normal game mode: icon to white and front, some circle in the background
+            //TODO: run gui.delayedAction("nudge_left") with 3 seconds delay, then reset everything
+        }
+    }
+    public List<String> getRoundJokers(){
+        List<String> returnJokers=new ArrayList<>();
+        double thisProb;
+        for(String thisJoker:availableJokers){
+            thisProb = Math.random();
+            if(jokerProb.get(thisJoker)>thisProb){
+                System.out.println("ADD! -> prob for Joker " + thisJoker + " > thisProb ("+thisProb+")");
+                returnJokers.addAll(getLabelsForJokerType(thisJoker));
+            }
+            else{
+                System.out.println("NO-ADD! -> prob for Joker " + thisJoker + " < thisProb ("+thisProb+")");
+            }
+        }
+        return returnJokers;
     }
     
     public void setPlayer(int player){
+        currentPlayer = player;
         Color red = new Color(255,0,51);
         Color green = new Color(0,255,0);
         Color blue = new Color(0,0,255);
@@ -65,6 +130,56 @@ public class JokerGame {
 
         }
     }
+    
+    public void startRound(int player){
+        setPlayer(player);
+        gui.gameTimer.setText(String.valueOf(timerTimeLeft/1000));
+        if(!roundJokers.isEmpty()) roundJokers.clear();
+        roundJokers = getRoundJokers();   
+        
+        
+        System.out.println("we have " + roundJokers.size()+ " different jokers this round!");
+        
+        gui.layerMainGame.setVisible(false);
+        gui.layerJokerGame.setVisible(true);
+        gui.hideAllJokeGameIcons();
+        gui.hideAllJokeGameActiveLabels();
+        for(String thisJoker: roundJokers){
+            gui.jokerGameIconLabels.get(thisJoker).setVisible(true);
+        }
+        jokerPointer = 0;
+        
+        if(timer.getActionListeners().length==0) initTimer();
+        
+        timer.start();
+        
+    }
+    
+    public void nextJoker(){
+        System.out.println("jokerPointer: " + jokerPointer);
+        int nextJoker = jokerPointer;
+        int previousJoker = jokerPointer - 1;
+        
+        if(previousJoker<0) previousJoker = roundJokers.size()-1;
+        
+        if(nextJoker+1==roundJokers.size()){
+            nextJoker = jokerPointer;
+            jokerPointer = 0;
+        }
+        else jokerPointer++;
+        
+        gui.jokerGameIconActiveLabels.get(roundJokers.get(previousJoker)).setVisible(false);
+        gui.jokerGameIconActiveLabels.get(roundJokers.get(nextJoker)).setVisible(true);       
+    }
+    
+    public String getActiveJoker(){
+        for(String thisJoker:roundJokers){
+            if(gui.jokerGameIconActiveLabels.get(thisJoker).isVisible()) return thisJoker;
+        }
+        return "error!";
+    }
+    
+    
     public void initTimer(){
         symbols.setGroupingSeparator(':');
         timer.addActionListener(new ActionListener() {
@@ -72,18 +187,12 @@ public class JokerGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timerTimeLeft -= 1000;
+                nextJoker();
                 
-                if(timerTimeLeft < 0){
-                    timer.stop();
-                    gameBoard.jokerTriggered=true;
-                    gui.gameTimer.setText("LET'S GO");
-                    gui.gameTimer.setFont(new Font("Lucide Grande", 0, 200));
-                   
-                    gui.gameTimer.setBackground(Color.green);
-                    gui.gameTimer.setForeground(Color.white);
+                if(timerTimeLeft <= 0){
+                    stopGame();
+                    gui.gameTimer.setText("0");
                     
-                    //soundPlayer.playCountdownEnd();
-                    //delayedAction("startSong");
                 }
                 else{
                     if(timerTimeLeft <= 3000){
@@ -91,6 +200,7 @@ public class JokerGame {
                             //this adds a flashing effect
                             gui.gameTimer.setBackground(Color.red);
                             gui.gameTimer.setForeground(Color.white);
+                            
                             //soundPlayer.playTimeTicking();
                         } else{
                             //this resets the flash
@@ -105,6 +215,16 @@ public class JokerGame {
             }
         });
 
+    }
+    
+    public void reset(){
+        
+        timer.stop();
+        timerTimeLeft = 11000;
+        gui.layerMainGame.setVisible(true);
+        gui.layerJokerGame.setVisible(false);
+        gui.gameTimer.setForeground(Color.black);
+        gui.gameTimer.setBackground(null);
     }
 
 }
