@@ -396,20 +396,20 @@ public class GUI extends javax.swing.JFrame {
         game_countdown.setText("19");
         game_countdown.setOpaque(true);
         jokerGameLayer.add(game_countdown);
-        game_countdown.setBounds(540, 330, 210, 160);
+        game_countdown.setBounds(540, 330, 210, 130);
 
         game_random_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_random_selected.setForeground(new java.awt.Color(0, 0, 255));
         game_random_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_random_selected.setText(" ");
         jokerGameLayer.add(game_random_selected);
-        game_random_selected.setBounds(440, 390, 410, 516);
+        game_random_selected.setBounds(440, 370, 410, 516);
 
         game_random.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
         game_random.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_random.setText("4");
         jokerGameLayer.add(game_random);
-        game_random.setBounds(520, 510, 250, 280);
+        game_random.setBounds(520, 490, 250, 280);
 
         game_random_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
         game_random_chosen.setForeground(new java.awt.Color(0, 0, 255));
@@ -417,20 +417,20 @@ public class GUI extends javax.swing.JFrame {
         game_random_chosen.setText(" ");
         game_random_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         jokerGameLayer.add(game_random_chosen);
-        game_random_chosen.setBounds(430, 390, 426, 516);
+        game_random_chosen.setBounds(430, 370, 426, 516);
 
         game_right_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_right_selected.setForeground(new java.awt.Color(0, 0, 255));
         game_right_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_right_selected.setText(" ");
         jokerGameLayer.add(game_right_selected);
-        game_right_selected.setBounds(840, 155, 410, 516);
+        game_right_selected.setBounds(840, 140, 410, 516);
 
         game_right.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
         game_right.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_right.setText("4");
         jokerGameLayer.add(game_right);
-        game_right.setBounds(920, 260, 250, 280);
+        game_right.setBounds(920, 240, 250, 280);
 
         game_right_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
         game_right_chosen.setForeground(new java.awt.Color(0, 0, 255));
@@ -438,20 +438,20 @@ public class GUI extends javax.swing.JFrame {
         game_right_chosen.setText(" ");
         game_right_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         jokerGameLayer.add(game_right_chosen);
-        game_right_chosen.setBounds(830, 155, 426, 516);
+        game_right_chosen.setBounds(830, 140, 426, 516);
 
         game_play_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_play_selected.setForeground(new java.awt.Color(0, 0, 255));
         game_play_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_play_selected.setText(" ");
         jokerGameLayer.add(game_play_selected);
-        game_play_selected.setBounds(440, -70, 410, 516);
+        game_play_selected.setBounds(440, -80, 410, 516);
 
         game_play.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
         game_play.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_play.setText("4");
         jokerGameLayer.add(game_play);
-        game_play.setBounds(520, 40, 250, 280);
+        game_play.setBounds(520, 20, 250, 280);
 
         game_play_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
         game_play_chosen.setForeground(new java.awt.Color(0, 0, 255));
@@ -459,20 +459,20 @@ public class GUI extends javax.swing.JFrame {
         game_play_chosen.setText(" ");
         game_play_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         jokerGameLayer.add(game_play_chosen);
-        game_play_chosen.setBounds(430, -70, 426, 516);
+        game_play_chosen.setBounds(430, -80, 426, 516);
 
         game_left_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_left_selected.setForeground(new java.awt.Color(0, 0, 255));
         game_left_selected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_left_selected.setText(" ");
         jokerGameLayer.add(game_left_selected);
-        game_left_selected.setBounds(-20, 155, 410, 516);
+        game_left_selected.setBounds(-20, 140, 410, 516);
 
         game_left.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
         game_left.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         game_left.setText("4");
         jokerGameLayer.add(game_left);
-        game_left.setBounds(60, 260, 250, 280);
+        game_left.setBounds(60, 240, 250, 280);
 
         game_left_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
         game_left_chosen.setForeground(new java.awt.Color(0, 0, 255));
@@ -480,7 +480,7 @@ public class GUI extends javax.swing.JFrame {
         game_left_chosen.setText(" ");
         game_left_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         jokerGameLayer.add(game_left_chosen);
-        game_left_chosen.setBounds(-30, 155, 426, 516);
+        game_left_chosen.setBounds(-30, 140, 426, 516);
 
         getContentPane().add(jokerGameLayer);
         jokerGameLayer.setBounds(0, 0, 1280, 800);
