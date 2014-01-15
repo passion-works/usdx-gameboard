@@ -28,7 +28,7 @@ public class GUI extends javax.swing.JFrame {
     public final int countdownSeconds = 7;
     public static GUI instance = null;
     public Timer timer = new Timer(100, null);
-    public Timer delayTimer = new Timer(5000, null);
+    public Timer delayTimer = new Timer(1000, null);
     public SoundPlayer soundPlayer;
     public Ugb gameBoard;
     public JLabel[] buzzerArray = new JLabel[4];
@@ -40,10 +40,14 @@ public class GUI extends javax.swing.JFrame {
     public long timerDelay = 5000;
     final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     Map<String, JLabel> jokerGameIconLabels = new HashMap<>();
-    Map<String, JLabel> jokerGameIconActiveLabels = new HashMap<>();
+    Map<String, JLabel> jokerGameIconSelectedLabels = new HashMap<>();
+    Map<String, JLabel> jokerGameIconChosenLabels = new HashMap<>();
     public JLabel gameTimer = null;
     public JLayeredPane layerJokerGame;
     public JLayeredPane layerMainGame;
+    Map<String, JLabel> activeJokerLabels = new HashMap<>();
+    Map<String, JLabel> activeJokerIconLabels = new HashMap<>();
+    private int delayTimeShort = 2000;
     
     
     public static GUI getInstance(){
@@ -102,16 +106,41 @@ public class GUI extends javax.swing.JFrame {
         game_random_selected.setText("\uF0A1");
         game_right_selected.setText("\uF0A1");
         
-        jokerGameIconLabels.put("play", game_play);
-        jokerGameIconActiveLabels.put("play", game_play_selected);
-        jokerGameIconLabels.put("left", game_left);
-        jokerGameIconActiveLabels.put("left", game_left_selected);
-        jokerGameIconLabels.put("right", game_right);
-        jokerGameIconActiveLabels.put("right", game_right_selected);
-        jokerGameIconLabels.put("random", game_random);
-        jokerGameIconActiveLabels.put("random", game_random_selected);
+        game_play_chosen.setText("\uF06C");
+        game_left_chosen.setText("\uF06C");
+        game_right_chosen.setText("\uF06C");
+        game_random_chosen.setText("\uF06C");
         
-        jokerGamePanel.setVisible(true);
+        jokerGameIconLabels.put("play", game_play);
+        jokerGameIconSelectedLabels.put("play", game_play_selected);
+        jokerGameIconLabels.put("left", game_left);
+        jokerGameIconSelectedLabels.put("left", game_left_selected);
+        jokerGameIconLabels.put("right", game_right);
+        jokerGameIconSelectedLabels.put("right", game_right_selected);
+        jokerGameIconLabels.put("random", game_random);
+        jokerGameIconSelectedLabels.put("random", game_random_selected);
+        
+        jokerGameIconChosenLabels.put("play", game_play_chosen);
+        jokerGameIconChosenLabels.put("left", game_left_chosen);
+        jokerGameIconChosenLabels.put("right", game_right_chosen);
+        jokerGameIconChosenLabels.put("random", game_random_chosen);
+        
+       
+        
+        activejoker_play.setText("\uF06C");
+        activejoker_nudge.setText("\uF06C");
+        activejoker_random.setText("\uF06C");
+        activejoker_play_icon.setText("\uF034");
+        activejoker_nudge_icon.setText("\uF046");
+        activejoker_random_icon.setText("\uF071");
+        
+        activeJokerLabels.put("play", activejoker_play);
+        activeJokerLabels.put("nudge", activejoker_nudge);
+        activeJokerLabels.put("random", activejoker_random);
+        
+        activeJokerIconLabels.put("play", activejoker_play_icon);
+        activeJokerIconLabels.put("nudge", activejoker_nudge_icon);
+        activeJokerIconLabels.put("random", activejoker_random_icon);
         
     }
     
@@ -122,8 +151,15 @@ public class GUI extends javax.swing.JFrame {
     }
     
     public void hideAllJokeGameActiveLabels(){
-        for(String thisJoker:jokerGameIconActiveLabels.keySet()){
-            jokerGameIconActiveLabels.get(thisJoker).setVisible(false);
+        for(String thisJoker:jokerGameIconSelectedLabels.keySet()){
+            jokerGameIconSelectedLabels.get(thisJoker).setVisible(false);
+        }
+    }
+    
+    public void resetAllJokeGameChosenLabels(){
+        for(String thisJoker:jokerGameIconSelectedLabels.keySet()){
+            jokerGameIconChosenLabels.get(thisJoker).setVisible(false);
+            jokerGameIconLabels.get(thisJoker).setForeground(Color.black);
         }
     }
 
@@ -137,6 +173,12 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         mainGameLayer = new javax.swing.JLayeredPane();
+        activejoker_nudge_icon = new javax.swing.JLabel();
+        activejoker_nudge = new javax.swing.JLabel();
+        activejoker_play_icon = new javax.swing.JLabel();
+        activejoker_play = new javax.swing.JLabel();
+        activejoker_random_icon = new javax.swing.JLabel();
+        activejoker_random = new javax.swing.JLabel();
         remTimePlchldLabel = new javax.swing.JLabel();
         buzzer1_tooslow = new javax.swing.JLabel();
         buzzer1_joker = new javax.swing.JLabel();
@@ -157,12 +199,16 @@ public class GUI extends javax.swing.JFrame {
         game_countdown = new javax.swing.JLabel();
         game_random_selected = new javax.swing.JLabel();
         game_random = new javax.swing.JLabel();
-        game_right = new javax.swing.JLabel();
+        game_random_chosen = new javax.swing.JLabel();
         game_right_selected = new javax.swing.JLabel();
-        game_play = new javax.swing.JLabel();
+        game_right = new javax.swing.JLabel();
+        game_right_chosen = new javax.swing.JLabel();
         game_play_selected = new javax.swing.JLabel();
-        game_left = new javax.swing.JLabel();
+        game_play = new javax.swing.JLabel();
+        game_play_chosen = new javax.swing.JLabel();
         game_left_selected = new javax.swing.JLabel();
+        game_left = new javax.swing.JLabel();
+        game_left_chosen = new javax.swing.JLabel();
         jokerGamePanel = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
 
@@ -176,14 +222,58 @@ public class GUI extends javax.swing.JFrame {
         mainGameLayer.setMaximumSize(new java.awt.Dimension(1280, 800));
         mainGameLayer.setMinimumSize(new java.awt.Dimension(1280, 800));
         mainGameLayer.setOpaque(true);
-        mainGameLayer.setPreferredSize(new java.awt.Dimension(1280, 800));
+
+        activejoker_nudge_icon.setFont(new java.awt.Font("Wingdings 3", 0, 75)); // NOI18N
+        activejoker_nudge_icon.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_nudge_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_nudge_icon.setText("4");
+        mainGameLayer.add(activejoker_nudge_icon);
+        activejoker_nudge_icon.setBounds(580, 290, 130, 115);
+
+        activejoker_nudge.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_nudge.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_nudge.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_nudge.setText(" ");
+        activejoker_nudge.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        mainGameLayer.add(activejoker_nudge);
+        activejoker_nudge.setBounds(580, 290, 130, 120);
+
+        activejoker_play_icon.setFont(new java.awt.Font("Webdings", 0, 75)); // NOI18N
+        activejoker_play_icon.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_play_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_play_icon.setText("4");
+        mainGameLayer.add(activejoker_play_icon);
+        activejoker_play_icon.setBounds(420, 290, 130, 115);
+
+        activejoker_play.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_play.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_play.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_play.setText(" ");
+        activejoker_play.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        mainGameLayer.add(activejoker_play);
+        activejoker_play.setBounds(420, 290, 130, 120);
+
+        activejoker_random_icon.setFont(new java.awt.Font("Webdings", 0, 75)); // NOI18N
+        activejoker_random_icon.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_random_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_random_icon.setText("4");
+        mainGameLayer.add(activejoker_random_icon);
+        activejoker_random_icon.setBounds(731, 293, 130, 115);
+
+        activejoker_random.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_random.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_random.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_random.setText(" ");
+        activejoker_random.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        mainGameLayer.add(activejoker_random);
+        activejoker_random.setBounds(730, 290, 130, 120);
 
         remTimePlchldLabel.setFont(new java.awt.Font("Lucida Grande", 0, 300)); // NOI18N
         remTimePlchldLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         remTimePlchldLabel.setText(" ");
         remTimePlchldLabel.setOpaque(true);
         mainGameLayer.add(remTimePlchldLabel);
-        remTimePlchldLabel.setBounds(0, 11, 1280, 312);
+        remTimePlchldLabel.setBounds(0, 11, 1280, 280);
 
         buzzer1_tooslow.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
         buzzer1_tooslow.setForeground(new java.awt.Color(255, 255, 255));
@@ -199,7 +289,7 @@ public class GUI extends javax.swing.JFrame {
         mainGameLayer.add(buzzer1_joker);
         buzzer1_joker.setBounds(60, 500, 290, 140);
 
-        buzzer1_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
+        buzzer1_active.setFont(new java.awt.Font("Wingdings", 0, 480)); // NOI18N
         buzzer1_active.setForeground(new java.awt.Color(0, 0, 255));
         buzzer1_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer1_active.setText(" ");
@@ -235,7 +325,7 @@ public class GUI extends javax.swing.JFrame {
         mainGameLayer.add(buzzer2_joker);
         buzzer2_joker.setBounds(500, 500, 290, 140);
 
-        buzzer2_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
+        buzzer2_active.setFont(new java.awt.Font("Wingdings", 0, 480)); // NOI18N
         buzzer2_active.setForeground(new java.awt.Color(255, 0, 51));
         buzzer2_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer2_active.setText(" ");
@@ -271,7 +361,7 @@ public class GUI extends javax.swing.JFrame {
         mainGameLayer.add(buzzer3_joker);
         buzzer3_joker.setBounds(920, 500, 290, 140);
 
-        buzzer3_active.setFont(new java.awt.Font("Wingdings", 0, 470)); // NOI18N
+        buzzer3_active.setFont(new java.awt.Font("Wingdings", 0, 480)); // NOI18N
         buzzer3_active.setForeground(new java.awt.Color(0, 255, 0));
         buzzer3_active.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buzzer3_active.setText(" ");
@@ -300,7 +390,6 @@ public class GUI extends javax.swing.JFrame {
         jokerGameLayer.setMaximumSize(new java.awt.Dimension(1280, 800));
         jokerGameLayer.setMinimumSize(new java.awt.Dimension(1280, 800));
         jokerGameLayer.setOpaque(true);
-        jokerGameLayer.setPreferredSize(new java.awt.Dimension(1280, 800));
 
         game_countdown.setFont(new java.awt.Font("Lucida Grande", 0, 150)); // NOI18N
         game_countdown.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -322,11 +411,13 @@ public class GUI extends javax.swing.JFrame {
         jokerGameLayer.add(game_random);
         game_random.setBounds(520, 510, 250, 280);
 
-        game_right.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
-        game_right.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        game_right.setText("4");
-        jokerGameLayer.add(game_right);
-        game_right.setBounds(920, 260, 250, 280);
+        game_random_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
+        game_random_chosen.setForeground(new java.awt.Color(0, 0, 255));
+        game_random_chosen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_random_chosen.setText(" ");
+        game_random_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jokerGameLayer.add(game_random_chosen);
+        game_random_chosen.setBounds(430, 390, 426, 516);
 
         game_right_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_right_selected.setForeground(new java.awt.Color(0, 0, 255));
@@ -335,11 +426,19 @@ public class GUI extends javax.swing.JFrame {
         jokerGameLayer.add(game_right_selected);
         game_right_selected.setBounds(840, 155, 410, 516);
 
-        game_play.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
-        game_play.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        game_play.setText("4");
-        jokerGameLayer.add(game_play);
-        game_play.setBounds(520, 40, 250, 280);
+        game_right.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_right.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_right.setText("4");
+        jokerGameLayer.add(game_right);
+        game_right.setBounds(920, 260, 250, 280);
+
+        game_right_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
+        game_right_chosen.setForeground(new java.awt.Color(0, 0, 255));
+        game_right_chosen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_right_chosen.setText(" ");
+        game_right_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jokerGameLayer.add(game_right_chosen);
+        game_right_chosen.setBounds(830, 155, 426, 516);
 
         game_play_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_play_selected.setForeground(new java.awt.Color(0, 0, 255));
@@ -348,11 +447,19 @@ public class GUI extends javax.swing.JFrame {
         jokerGameLayer.add(game_play_selected);
         game_play_selected.setBounds(440, -70, 410, 516);
 
-        game_left.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
-        game_left.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        game_left.setText("4");
-        jokerGameLayer.add(game_left);
-        game_left.setBounds(60, 260, 250, 280);
+        game_play.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_play.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_play.setText("4");
+        jokerGameLayer.add(game_play);
+        game_play.setBounds(520, 40, 250, 280);
+
+        game_play_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
+        game_play_chosen.setForeground(new java.awt.Color(0, 0, 255));
+        game_play_chosen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_play_chosen.setText(" ");
+        game_play_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jokerGameLayer.add(game_play_chosen);
+        game_play_chosen.setBounds(430, -70, 426, 516);
 
         game_left_selected.setFont(new java.awt.Font("Wingdings", 0, 400)); // NOI18N
         game_left_selected.setForeground(new java.awt.Color(0, 0, 255));
@@ -360,6 +467,20 @@ public class GUI extends javax.swing.JFrame {
         game_left_selected.setText(" ");
         jokerGameLayer.add(game_left_selected);
         game_left_selected.setBounds(-20, 155, 410, 516);
+
+        game_left.setFont(new java.awt.Font("Webdings", 0, 200)); // NOI18N
+        game_left.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_left.setText("4");
+        jokerGameLayer.add(game_left);
+        game_left.setBounds(60, 260, 250, 280);
+
+        game_left_chosen.setFont(new java.awt.Font("Wingdings", 0, 450)); // NOI18N
+        game_left_chosen.setForeground(new java.awt.Color(0, 0, 255));
+        game_left_chosen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        game_left_chosen.setText(" ");
+        game_left_chosen.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jokerGameLayer.add(game_left_chosen);
+        game_left_chosen.setBounds(-30, 155, 426, 516);
 
         getContentPane().add(jokerGameLayer);
         jokerGameLayer.setBounds(0, 0, 1280, 800);
@@ -392,8 +513,7 @@ public class GUI extends javax.swing.JFrame {
                     remTimePlchldLabel.setBackground(Color.green);
                     remTimePlchldLabel.setForeground(Color.white);
                     
-                    soundPlayer.playCountdownEnd();
-                    delayedAction("startSong");
+                    delayedAction("startSong", 3000);
                 }
                 else{
                     if(timerTimeLeft <= 3000){
@@ -501,9 +621,10 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     
-    public void delayedAction(final String action){
+    public void delayedAction(final String action, int delayTime){
         //wait for 3 seconds then perform action
-        timerDelay = 3000;
+        timerDelay = delayTime;
+        if(action.equals("startSong")) soundPlayer.playCountdownEnd();
         System.out.println("DelayedAction: " + action);
 
         //delete the old actionListener if there is one
@@ -512,26 +633,33 @@ public class GUI extends javax.swing.JFrame {
         delayTimer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                timerDelay -= 4000;
+                timerDelay -= 1000;
                 if(timerDelay<=0){
+                    delayTimer.stop();
                     //switch delayed actions here
                     switch(action){
                         case "startSong":
-                            delayTimer.stop();
                             gameBoard.startSong();
                         break;                        
                         case "joker1":
-                            delayTimer.stop();
                             gameBoard.useJoker(1);
                         break;
                         case "joker2":
-                            delayTimer.stop();
                             gameBoard.useJoker(2);
                         break;
                         case "joker3":
-                            delayTimer.stop();
                             gameBoard.useJoker(3);
                         break;
+                        case "left":
+                            gameBoard.nudge("left");
+                        break;     
+                        case "right":
+                            gameBoard.nudge("right");
+                        break;     
+                        case "random":
+                            gameBoard.randomSong(JokerGame.getInstance().currentPlayer);
+                        break;     
+                    
                     }
                 }
             }
@@ -541,7 +669,7 @@ public class GUI extends javax.swing.JFrame {
     public void enableBuzzer(int player){
         buzzerActiveArray[player].setVisible(true);
         buzzerJokerArray[player].setVisible(true);
-        delayedAction("joker" + player);
+        delayedAction("joker" + player, 3000);
     }
     
     public void tooSlowBuzzer(int player){
@@ -551,6 +679,12 @@ public class GUI extends javax.swing.JFrame {
         
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel activejoker_nudge;
+    private javax.swing.JLabel activejoker_nudge_icon;
+    private javax.swing.JLabel activejoker_play;
+    private javax.swing.JLabel activejoker_play_icon;
+    private javax.swing.JLabel activejoker_random;
+    private javax.swing.JLabel activejoker_random_icon;
     private javax.swing.JLabel buzzer1;
     private javax.swing.JLabel buzzer1_active;
     private javax.swing.JLabel buzzer1_count;
@@ -568,12 +702,16 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel buzzer3_tooslow;
     private javax.swing.JLabel game_countdown;
     private javax.swing.JLabel game_left;
+    private javax.swing.JLabel game_left_chosen;
     private javax.swing.JLabel game_left_selected;
     private javax.swing.JLabel game_play;
+    private javax.swing.JLabel game_play_chosen;
     private javax.swing.JLabel game_play_selected;
     private javax.swing.JLabel game_random;
+    private javax.swing.JLabel game_random_chosen;
     private javax.swing.JLabel game_random_selected;
     private javax.swing.JLabel game_right;
+    private javax.swing.JLabel game_right_chosen;
     private javax.swing.JLabel game_right_selected;
     private javax.swing.JLayeredPane jokerGameLayer;
     private javax.swing.JPanel jokerGamePanel;

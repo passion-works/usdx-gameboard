@@ -6,6 +6,9 @@
 
 package ugb;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,7 +24,10 @@ public class Ugb {
     public HotkeyController buzzerController = null;
     public KeystrokeController keystrokeController = null;
     public JokerGame jokerGame = null;
-    public boolean playJokerGame = false;
+    public boolean playJokerGame = true;
+    public SoundPlayer soundPlayer;
+    private int matchCount = 0;
+    private int roundCount = 1;
     //TODO: Maybe set playerCount here
     
     /**
@@ -55,11 +61,18 @@ public class Ugb {
         buzzerController = HotkeyController.getInstance();
         buzzerController.init();
         
+        try {
+            soundPlayer = SoundPlayer.getInstance();
+        } catch (IOException ex) {
+            Logger.getLogger(Ugb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         keystrokeController = KeystrokeController.getInstance();
         jokerGame = JokerGame.getInstance();
     }
     
     public void newGame(){
+        matchCount++;
         buzzerController.disableAllBuzzers();
         Object antwort = JOptionPane.showInputDialog(null, "Wieviele Joker", "Neue Runde", 
         JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -74,20 +87,27 @@ public class Ugb {
     }
     
     public void startSong(){
-        System.out.println("START ROUND!!!");
+        System.out.println(">>>START SONG");
         keystrokeController.sendKeyEnter();
         reset();
     }
-
-    public void useJoker(int player) {
-         System.out.println("PLAY JOKER!!! And reducing joker count of Player" + player);
-         jokerCount[player]--;
-         if(playJokerGame){
-             jokerGame.startRound(player);
-         }
-         else{
-            reset();
-            switch(player){
+    
+    public void nudge(String direction){
+        System.out.println(">>>NUDGE " + direction.toUpperCase());
+        switch(direction){
+            case "left":
+                keystrokeController.sendKeyLeft();
+            break;
+            case "right":
+                keystrokeController.sendKeyRight();
+            break;
+        }
+        gameBoardGUI.delayedAction("startSong", 10000);
+    }
+    
+    public void randomSong(int player){
+        System.out.println(">>>RANDOM SONG");
+          switch(player){
              case 1:
                  keystrokeController.sendKey1();
              break;
@@ -97,19 +117,48 @@ public class Ugb {
              case 3:
                 keystrokeController.sendKey3();
              break;
-            }   
+            }
+          reset();
+    }
+    
+    public void useJoker(int player) {
+         System.out.println("PLAY JOKER!!! And reducing joker count of Player" + player);
+         jokerCount[player]--;
+         if(playJokerGame){
+             if(jokerGame.roundJokerLabels.size()==1){
+                 jokerGame.setPlayer(player);
+                 jokerGame.stopGame();
+             }
+             else jokerGame.startRound(player);
          }
-         //TODO: send keystroke player to USDX
-        
+         else{
+            randomSong(player);
+         } 
     }
     
     public void reset(){
-        System.out.println("--- NEW ROUND ---");
+        System.out.println("------ NEW ROUND ------");
+        System.out.println("This is match #" + matchCount + " and overall round #" + roundCount);
+        roundCount++;
         gameBoardGUI.reset();
         jokerGame.reset();
         jokerTriggered = false;
         for(int i=1; i<=3; i++){
             System.out.println("Player " + i + ": " + jokerCount[i] + " Joker left");
         }
+        if(playJokerGame) showRoundJokers();
+    }
+    
+    public void showRoundJokers(){
+         for(String availableJoker:jokerGame.availableJokers){
+             System.out.println("availableJoker: " + availableJoker);
+             gameBoardGUI.activeJokerIconLabels.get(availableJoker).setVisible(false);
+             gameBoardGUI.activeJokerLabels.get(availableJoker).setVisible(false);
+         }
+         for(String activeJoker:jokerGame.roundJoker){
+             System.out.println("activeJoker: " + activeJoker);
+             gameBoardGUI.activeJokerIconLabels.get(activeJoker).setVisible(true);
+             gameBoardGUI.activeJokerLabels.get(activeJoker).setVisible(true);
+         }
     }
 }

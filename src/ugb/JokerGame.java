@@ -34,7 +34,8 @@ public class JokerGame {
     public long timerTimeLeft = 11000;
     Map<String, Double> jokerProb = new HashMap<>();
     public String[] availableJokers = new String[3];
-    private List<String> roundJokers = new ArrayList<>();
+    public List<String> roundJokerLabels = new ArrayList<>();
+    public List<String> roundJoker = new ArrayList<>();
     private int jokerPointer;
     public int currentPlayer;
     public SoundPlayer soundPlayer;
@@ -54,13 +55,12 @@ public class JokerGame {
         }
   
         jokerProb.put("play", 0.4);
-        jokerProb.put("nudge", 0.5);
-        jokerProb.put("random", 1.0);
+        jokerProb.put("nudge", 0.65);
+        jokerProb.put("random", 0.9);
         
         availableJokers[0]="play";
         availableJokers[1]="nudge";
         availableJokers[2]="random";
-  
     }
     
     public List<String> getLabelsForJokerType(String jokerType){
@@ -84,10 +84,25 @@ public class JokerGame {
         String activeJoker = getActiveJoker();
         if(!activeJoker.equals("error!")){
             timer.stop();
-            soundPlayer.playBuzzer();
+            if(roundJokerLabels.size()>1) soundPlayer.playBuzzer();
+            gui.jokerGameIconChosenLabels.get(activeJoker).setVisible(true);
+            gui.jokerGameIconLabels.get(activeJoker).setForeground(Color.white);
             System.out.println("GAME STOPPED at Joker: " + getActiveJoker());
-            //TODO: Highlight the selected Joker (like in normal game mode: icon to white and front, some circle in the background
             //TODO: run gui.delayedAction("nudge_left") with 3 seconds delay, then reset everything
+            switch(activeJoker){
+                case "play":
+                    gui.delayedAction("startSong", 3000);
+                break;
+                case "left":
+                    gameBoard.nudge("left");
+                break;
+                case "right":
+                    gameBoard.nudge("right");
+                break;
+                case "random":
+                    gui.delayedAction("random", 0);
+                break;
+            }
         }
     }
     public List<String> getRoundJokers(){
@@ -95,13 +110,19 @@ public class JokerGame {
         double thisProb;
         for(String thisJoker:availableJokers){
             thisProb = Math.random();
-            if(jokerProb.get(thisJoker)>thisProb){
+            if(jokerProb.get(thisJoker)>=thisProb){
                 System.out.println("ADD! -> prob for Joker " + thisJoker + " > thisProb ("+thisProb+")");
                 returnJokers.addAll(getLabelsForJokerType(thisJoker));
+                roundJoker.add(thisJoker);
             }
             else{
                 System.out.println("NO-ADD! -> prob for Joker " + thisJoker + " < thisProb ("+thisProb+")");
             }
+        }
+        if(returnJokers.size()==0){
+                System.out.println("FALLBACK - NO JOKERS WERE CHOSEN SO ADD THE RANDOM JOKER");
+                returnJokers.addAll(getLabelsForJokerType("random"));
+                roundJoker.add("random");
         }
         return returnJokers;
     }
@@ -124,30 +145,30 @@ public class JokerGame {
                 activeColor = green;
             break;
         }
-        for(String key : gui.jokerGameIconActiveLabels.keySet()) {
-            System.out.println("key: " + key);
-            gui.jokerGameIconActiveLabels.get(key).setForeground(activeColor);
-
+        for(String key : gui.jokerGameIconSelectedLabels.keySet()) {
+            gui.jokerGameIconSelectedLabels.get(key).setForeground(activeColor);
+            gui.jokerGameIconChosenLabels.get(key).setForeground(activeColor);
         }
+    }
+    public void setRoundJoker(){
+        System.out.println("SETTING JOKERS");
+        roundJokerLabels = getRoundJokers();   
     }
     
     public void startRound(int player){
         setPlayer(player);
         gui.gameTimer.setText(String.valueOf(timerTimeLeft/1000));
-        if(!roundJokers.isEmpty()) roundJokers.clear();
-        roundJokers = getRoundJokers();   
         
         
-        System.out.println("we have " + roundJokers.size()+ " different jokers this round!");
+        System.out.println("we have " + roundJokerLabels.size()+ " different jokers this round!");
         
         gui.layerMainGame.setVisible(false);
         gui.layerJokerGame.setVisible(true);
-        gui.hideAllJokeGameIcons();
-        gui.hideAllJokeGameActiveLabels();
-        for(String thisJoker: roundJokers){
+        
+        for(String thisJoker: roundJokerLabels){
             gui.jokerGameIconLabels.get(thisJoker).setVisible(true);
         }
-        jokerPointer = 0;
+        //jokerPointer = 0;
         
         if(timer.getActionListeners().length==0) initTimer();
         
@@ -157,24 +178,25 @@ public class JokerGame {
     
     public void nextJoker(){
         System.out.println("jokerPointer: " + jokerPointer);
+        
         int nextJoker = jokerPointer;
         int previousJoker = jokerPointer - 1;
         
-        if(previousJoker<0) previousJoker = roundJokers.size()-1;
+        if(previousJoker<0) previousJoker = roundJokerLabels.size()-1;
         
-        if(nextJoker+1==roundJokers.size()){
+        if(nextJoker+1==roundJokerLabels.size()){
             nextJoker = jokerPointer;
             jokerPointer = 0;
         }
         else jokerPointer++;
         
-        gui.jokerGameIconActiveLabels.get(roundJokers.get(previousJoker)).setVisible(false);
-        gui.jokerGameIconActiveLabels.get(roundJokers.get(nextJoker)).setVisible(true);       
+        gui.jokerGameIconSelectedLabels.get(roundJokerLabels.get(previousJoker)).setVisible(false);
+        gui.jokerGameIconSelectedLabels.get(roundJokerLabels.get(nextJoker)).setVisible(true);       
     }
     
     public String getActiveJoker(){
-        for(String thisJoker:roundJokers){
-            if(gui.jokerGameIconActiveLabels.get(thisJoker).isVisible()) return thisJoker;
+        for(String thisJoker:roundJokerLabels){
+            if(gui.jokerGameIconSelectedLabels.get(thisJoker).isVisible()) return thisJoker;
         }
         return "error!";
     }
@@ -218,13 +240,21 @@ public class JokerGame {
     }
     
     public void reset(){
-        
         timer.stop();
         timerTimeLeft = 11000;
         gui.layerMainGame.setVisible(true);
         gui.layerJokerGame.setVisible(false);
         gui.gameTimer.setForeground(Color.black);
         gui.gameTimer.setBackground(null);
+        gui.resetAllJokeGameChosenLabels();
+        roundJoker.clear();
+        roundJokerLabels.clear();
+        setRoundJoker();
+        System.out.println("BLABLABLA");
+        jokerPointer = 0;
+        gui.hideAllJokeGameIcons();
+        gui.hideAllJokeGameActiveLabels();
+        nextJoker();
     }
 
 }
