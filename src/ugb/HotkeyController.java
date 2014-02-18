@@ -61,6 +61,9 @@ public class HotkeyController implements HotkeyListener {
             gameBoard.jokerCount[3]++;
             gameBoardGui.buzzerCountArray[3].setText(String.valueOf(gameBoard.jokerCount[3]));
         }
+        else if(i==999){
+            gameBoardGui.openSettings();
+        }
     }
     
     private void buzzerDown(int player){
@@ -115,6 +118,7 @@ public class HotkeyController implements HotkeyListener {
         JIntellitype.getInstance().registerHotKey(101,JIntellitype.MOD_SHIFT, (int)'1');
         JIntellitype.getInstance().registerHotKey(102,JIntellitype.MOD_SHIFT, (int)'2');
         JIntellitype.getInstance().registerHotKey(103,JIntellitype.MOD_SHIFT, (int)'3');
+        JIntellitype.getInstance().registerHotKey(999,JIntellitype.MOD_CONTROL,(int)'S');
         
         JIntellitype.getInstance().addHotKeyListener(HotkeyController.getInstance());
     }

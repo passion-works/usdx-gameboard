@@ -63,6 +63,17 @@ public class JokerGame {
         availableJokers[2]="random";
     }
     
+    public int getJokerProb(String joker){
+        return (int) (jokerProb.get(joker) * 100);
+    }
+    
+    public void setJokerProb(String joker, int value){
+        System.out.println("SET New Joker propability for " + joker + ": " + value);
+        double newProb = (double) value / 100;
+        jokerProb.put(joker, newProb);
+        System.out.println("New Joker propability for " + joker + ": " + jokerProb.get(joker));
+    }
+    
     public List<String> getLabelsForJokerType(String jokerType){
         List<String> returnJokerLabels = new ArrayList<>();
         switch(jokerType){

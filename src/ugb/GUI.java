@@ -45,9 +45,11 @@ public class GUI extends javax.swing.JFrame {
     public JLabel gameTimer = null;
     public JLayeredPane layerJokerGame;
     public JLayeredPane layerMainGame;
+    public JLayeredPane layerSettings;
     Map<String, JLabel> activeJokerLabels = new HashMap<>();
     Map<String, JLabel> activeJokerIconLabels = new HashMap<>();
     private int delayTimeShort = 2000;
+    private JokerGame jokerGame = null;
     
     
     public static GUI getInstance(){
@@ -93,6 +95,10 @@ public class GUI extends javax.swing.JFrame {
         layerJokerGame = jokerGameLayer;
         jokerGameLayer.setVisible(false);
         layerMainGame = mainGameLayer;
+        mainGameLayer.setVisible(true);
+        layerSettings = settingsLayer;
+        layerSettings.setVisible(false);
+        
       
         gameTimer = game_countdown;
         
@@ -134,6 +140,13 @@ public class GUI extends javax.swing.JFrame {
         activejoker_nudge_icon.setText("\uF046");
         activejoker_random_icon.setText("\uF071");
         
+        activejoker_play1.setText("\uF06C");
+        activejoker_nudge1.setText("\uF06C");
+        activejoker_random1.setText("\uF06C");
+        activejoker_play_icon1.setText("\uF034");
+        activejoker_nudge_icon1.setText("\uF046");
+        activejoker_random_icon1.setText("\uF071");
+        
         activeJokerLabels.put("play", activejoker_play);
         activeJokerLabels.put("nudge", activejoker_nudge);
         activeJokerLabels.put("random", activejoker_random);
@@ -172,6 +185,23 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        settingsLayer = new javax.swing.JLayeredPane();
+        jLabel1 = new javax.swing.JLabel();
+        activejoker_nudge_icon1 = new javax.swing.JLabel();
+        activejoker_nudge1 = new javax.swing.JLabel();
+        activejoker_play_icon1 = new javax.swing.JLabel();
+        activejoker_play1 = new javax.swing.JLabel();
+        activejoker_random_icon1 = new javax.swing.JLabel();
+        activejoker_random1 = new javax.swing.JLabel();
+        sliderPlay = new javax.swing.JSlider();
+        sliderNudge = new javax.swing.JSlider();
+        sliderRand = new javax.swing.JSlider();
+        probPlay = new javax.swing.JTextField();
+        probNudge = new javax.swing.JTextField();
+        probRand = new javax.swing.JTextField();
+        settingsSave = new javax.swing.JButton();
+        settingsCancek = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         mainGameLayer = new javax.swing.JLayeredPane();
         activejoker_nudge_icon = new javax.swing.JLabel();
         activejoker_nudge = new javax.swing.JLabel();
@@ -218,6 +248,129 @@ public class GUI extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1280, 900));
         setResizable(false);
         getContentPane().setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setText("Game settings:");
+        settingsLayer.add(jLabel1);
+        jLabel1.setBounds(0, 0, 430, 120);
+
+        activejoker_nudge_icon1.setFont(new java.awt.Font("Wingdings 3", 0, 75)); // NOI18N
+        activejoker_nudge_icon1.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_nudge_icon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_nudge_icon1.setText("4");
+        settingsLayer.add(activejoker_nudge_icon1);
+        activejoker_nudge_icon1.setBounds(170, 220, 130, 115);
+
+        activejoker_nudge1.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_nudge1.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_nudge1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_nudge1.setText(" ");
+        activejoker_nudge1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        settingsLayer.add(activejoker_nudge1);
+        activejoker_nudge1.setBounds(170, 220, 130, 120);
+
+        activejoker_play_icon1.setFont(new java.awt.Font("Webdings", 0, 75)); // NOI18N
+        activejoker_play_icon1.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_play_icon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_play_icon1.setText("4");
+        settingsLayer.add(activejoker_play_icon1);
+        activejoker_play_icon1.setBounds(10, 220, 130, 115);
+
+        activejoker_play1.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_play1.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_play1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_play1.setText(" ");
+        activejoker_play1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        settingsLayer.add(activejoker_play1);
+        activejoker_play1.setBounds(10, 220, 130, 120);
+
+        activejoker_random_icon1.setFont(new java.awt.Font("Webdings", 0, 75)); // NOI18N
+        activejoker_random_icon1.setForeground(new java.awt.Color(255, 255, 255));
+        activejoker_random_icon1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_random_icon1.setText("4");
+        settingsLayer.add(activejoker_random_icon1);
+        activejoker_random_icon1.setBounds(330, 220, 110, 120);
+
+        activejoker_random1.setFont(new java.awt.Font("Wingdings", 0, 150)); // NOI18N
+        activejoker_random1.setForeground(new java.awt.Color(255, 153, 0));
+        activejoker_random1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activejoker_random1.setText(" ");
+        activejoker_random1.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        settingsLayer.add(activejoker_random1);
+        activejoker_random1.setBounds(320, 220, 130, 120);
+
+        sliderPlay.setOrientation(javax.swing.JSlider.VERTICAL);
+        sliderPlay.setPaintLabels(true);
+        sliderPlay.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderPlayStateChanged(evt);
+            }
+        });
+        settingsLayer.add(sliderPlay);
+        sliderPlay.setBounds(50, 350, 50, 200);
+
+        sliderNudge.setOrientation(javax.swing.JSlider.VERTICAL);
+        sliderNudge.setPaintLabels(true);
+        sliderNudge.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderNudgeStateChanged(evt);
+            }
+        });
+        settingsLayer.add(sliderNudge);
+        sliderNudge.setBounds(210, 350, 50, 200);
+
+        sliderRand.setOrientation(javax.swing.JSlider.VERTICAL);
+        sliderRand.setPaintLabels(true);
+        sliderRand.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderRandStateChanged(evt);
+            }
+        });
+        settingsLayer.add(sliderRand);
+        sliderRand.setBounds(360, 350, 50, 200);
+
+        probPlay.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        probPlay.setText("jTextField1");
+        probPlay.setFocusable(false);
+        settingsLayer.add(probPlay);
+        probPlay.setBounds(40, 550, 59, 20);
+
+        probNudge.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        probNudge.setText("jTextField1");
+        probNudge.setFocusable(false);
+        settingsLayer.add(probNudge);
+        probNudge.setBounds(200, 550, 59, 20);
+
+        probRand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        probRand.setText("jTextField1");
+        probRand.setFocusable(false);
+        settingsLayer.add(probRand);
+        probRand.setBounds(350, 550, 59, 20);
+
+        settingsSave.setText("save");
+        settingsSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsSaveActionPerformed(evt);
+            }
+        });
+        settingsLayer.add(settingsSave);
+        settingsSave.setBounds(30, 640, 120, 23);
+
+        settingsCancek.setText("cancel");
+        settingsCancek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsCancekActionPerformed(evt);
+            }
+        });
+        settingsLayer.add(settingsCancek);
+        settingsCancek.setBounds(190, 640, 80, 23);
+
+        jLabel2.setText("<html><h1>Joker probability</h1>Use the sliders below to adjust the probability that a joker is available in a round. (0% means the joker will never be available, 100% that it will be available in each round)</html>");
+        settingsLayer.add(jLabel2);
+        jLabel2.setBounds(50, 110, 430, 100);
+
+        getContentPane().add(settingsLayer);
+        settingsLayer.setBounds(0, 0, 1280, 800);
 
         mainGameLayer.setMaximumSize(new java.awt.Dimension(1280, 800));
         mainGameLayer.setMinimumSize(new java.awt.Dimension(1280, 800));
@@ -496,6 +649,32 @@ public class GUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sliderPlayStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderPlayStateChanged
+        probPlay.setText(sliderPlay.getValue() + "%");
+    }//GEN-LAST:event_sliderPlayStateChanged
+
+    private void sliderNudgeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderNudgeStateChanged
+        probNudge.setText(sliderNudge.getValue() + "%");
+    }//GEN-LAST:event_sliderNudgeStateChanged
+
+    private void sliderRandStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderRandStateChanged
+        probRand.setText(sliderRand.getValue() + "%");
+    }//GEN-LAST:event_sliderRandStateChanged
+
+    private void settingsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsSaveActionPerformed
+        jokerGame.setJokerProb("nudge", sliderNudge.getValue());
+        jokerGame.setJokerProb("play", sliderPlay.getValue());
+        jokerGame.setJokerProb("random", sliderRand.getValue());
+        
+        settingsLayer.setVisible(false);
+        mainGameLayer.setVisible(true);
+    }//GEN-LAST:event_settingsSaveActionPerformed
+
+    private void settingsCancekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsCancekActionPerformed
+        settingsLayer.setVisible(false);
+        mainGameLayer.setVisible(true);
+    }//GEN-LAST:event_settingsCancekActionPerformed
     public void initTimer(){
         symbols.setGroupingSeparator(':');
         timer.addActionListener(new ActionListener() {
@@ -680,11 +859,17 @@ public class GUI extends javax.swing.JFrame {
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activejoker_nudge;
+    private javax.swing.JLabel activejoker_nudge1;
     private javax.swing.JLabel activejoker_nudge_icon;
+    private javax.swing.JLabel activejoker_nudge_icon1;
     private javax.swing.JLabel activejoker_play;
+    private javax.swing.JLabel activejoker_play1;
     private javax.swing.JLabel activejoker_play_icon;
+    private javax.swing.JLabel activejoker_play_icon1;
     private javax.swing.JLabel activejoker_random;
+    private javax.swing.JLabel activejoker_random1;
     private javax.swing.JLabel activejoker_random_icon;
+    private javax.swing.JLabel activejoker_random_icon1;
     private javax.swing.JLabel buzzer1;
     private javax.swing.JLabel buzzer1_active;
     private javax.swing.JLabel buzzer1_count;
@@ -713,11 +898,34 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel game_right;
     private javax.swing.JLabel game_right_chosen;
     private javax.swing.JLabel game_right_selected;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jokerGameLayer;
     private javax.swing.JPanel jokerGamePanel;
     private javax.swing.JLayeredPane mainGameLayer;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTextField probNudge;
+    private javax.swing.JTextField probPlay;
+    private javax.swing.JTextField probRand;
     private javax.swing.JLabel remTimePlchldLabel;
+    private javax.swing.JButton settingsCancek;
+    private javax.swing.JLayeredPane settingsLayer;
+    private javax.swing.JButton settingsSave;
+    private javax.swing.JSlider sliderNudge;
+    private javax.swing.JSlider sliderPlay;
+    private javax.swing.JSlider sliderRand;
     // End of variables declaration//GEN-END:variables
+
+    public void openSettings() {
+        if(timer.isRunning()) timer.stop();
+        if(jokerGame==null) jokerGame=JokerGame.getInstance();
+        
+        sliderNudge.setValue(jokerGame.getJokerProb("nudge"));
+        sliderPlay.setValue(jokerGame.getJokerProb("play"));
+        sliderRand.setValue(jokerGame.getJokerProb("random"));
+        
+        settingsLayer.setVisible(true);
+        mainGameLayer.setVisible(false);
+    }
 }
 
