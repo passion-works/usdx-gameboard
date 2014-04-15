@@ -112,9 +112,9 @@ public class HotkeyController implements HotkeyListener {
         }
         
         
-        JIntellitype.getInstance().registerHotKey(4,0, KeyEvent.VK_DELETE); //reset/new round
-        JIntellitype.getInstance().registerHotKey(5,0, KeyEvent.VK_INSERT); //new match
-        JIntellitype.getInstance().registerHotKey(6,0, KeyEvent.VK_END); //start countdown
+        JIntellitype.getInstance().registerHotKey(4,0, KeyEvent.VK_END); //reset/new round
+        JIntellitype.getInstance().registerHotKey(5,0, KeyEvent.VK_HOME); //new match
+        JIntellitype.getInstance().registerHotKey(6,0, KeyEvent.VK_NUMPAD0); //start countdown
         JIntellitype.getInstance().registerHotKey(101,JIntellitype.MOD_SHIFT, (int)'1');
         JIntellitype.getInstance().registerHotKey(102,JIntellitype.MOD_SHIFT, (int)'2');
         JIntellitype.getInstance().registerHotKey(103,JIntellitype.MOD_SHIFT, (int)'3');
