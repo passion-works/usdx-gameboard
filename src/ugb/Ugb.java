@@ -34,12 +34,19 @@ public class Ugb {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
         Ugb gameBoard = Ugb.getInstance();
-        gameBoard.baseDir = args[0].replaceAll("\\\\", "/");
+        
+        String path;
+        String classDir = Ugb.class.getResource("Ugb.class").toString();
+        if(classDir.startsWith("jar:")){
+            path=Ugb.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            path=path.substring(1, path.lastIndexOf("/")) + "/lib";
+        }
+        else{
+            path=System.getProperty("user.dir") + "\\lib";
+        }
+        gameBoard.baseDir=path;
         gameBoard.init();
-        
-        
         System.out.println("Running UltraStar Gameboard on a " + System.getProperty("sun.arch.data.model") + "bit system");
         System.out.println("Current base dir: " + gameBoard.baseDir);
         
@@ -74,11 +81,10 @@ public class Ugb {
     public void newGame(){
         matchCount++;
         buzzerController.disableAllBuzzers();
-        Object antwort = JOptionPane.showInputDialog(null, "Wieviele Joker", "Neue Runde", 
+        Object antwort = JOptionPane.showInputDialog(null, "How many jokers per player?", "New round", 
         JOptionPane.INFORMATION_MESSAGE, null, null, null);
         //TODO: Validate Antwort as int
-        //TODO: set jokerCount[player]=antwort for each player 
-        System.out.println("Setze: " + Integer.parseInt((String) antwort) + " für jeden Spieler");
+        System.out.println("Setting " + Integer.parseInt((String) antwort) + " jokers for each player");
         for(int i=1; i<=3; i++){
             jokerCount[i] = Integer.parseInt((String) antwort);
         }

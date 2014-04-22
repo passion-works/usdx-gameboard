@@ -261,7 +261,6 @@ public class JokerGame {
         roundJoker.clear();
         roundJokerLabels.clear();
         setRoundJoker();
-        System.out.println("BLABLABLA");
         jokerPointer = 0;
         gui.hideAllJokeGameIcons();
         gui.hideAllJokeGameActiveLabels();
